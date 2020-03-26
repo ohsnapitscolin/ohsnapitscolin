@@ -15,11 +15,11 @@ const Wrapper = styled.div`
   background-color: blue;
 `;
 
-export default class Index extends React.Component {
+export default class FourOhFour extends React.Component {
   render() {
     return (
       <>
-        <SEO title={"Home"} />
+        <SEO title={"404"} />
         <Wrapper />;
       </>
     );
