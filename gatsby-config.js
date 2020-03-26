@@ -5,6 +5,7 @@ module.exports = {
     author: `Colin Dunn`,
   },
   plugins: [
+    "gatsby-plugin-remove-trailing-slashes",
     `gatsby-plugin-layout`,
     "gatsby-plugin-styled-components",
     `gatsby-plugin-react-helmet`,
