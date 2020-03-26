@@ -64,7 +64,7 @@ export default class Board extends React.Component {
       return;
     }
 
-    const number = this._getUnusedNumberForRange(0, 75, remove);
+    const number = this._getUnusedNumberForRange(1, 75, remove);
     const letter = this._getLetterForNumber(number);
 
     this.setState({
