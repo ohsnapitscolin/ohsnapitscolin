@@ -1,21 +1,29 @@
-import React from "react"
-import { Link } from "gatsby"
+import React from "react";
+import styled from "styled-components";
 
-import Layout from "../components/layout"
-import Image from "../components/image"
-import SEO from "../components/seo"
+import SEO from "../components/seo";
 
-const IndexPage = () => (
-  <Layout>
-    <SEO title="Home" />
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
-    <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-      <Image />
-    </div>
-    <Link to="/page-2/">Go to page 2</Link>
-  </Layout>
-)
+import "../style/snap.css";
 
-export default IndexPage
+const Wrapper = styled.div`
+  max-width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background-color: blue;
+`;
+
+export default class Index extends React.Component {
+  render() {
+    return (
+      <>
+        <SEO title={"Home"} />
+        <Wrapper />;
+      </>
+    );
+  }
+}
