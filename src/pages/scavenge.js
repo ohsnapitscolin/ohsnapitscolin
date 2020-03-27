@@ -93,14 +93,17 @@ const Button = styled.button`
 `;
 
 const Questions = [
-  "changes over time",
-  "children hate",
-  "comes in a pack of two",
-  "you've made",
-  "has 10 letters in its name",
-  "is warm",
-  "starts with the letter C",
-  "has more than 27 items in it",
+  "a lightbulb",
+  "before this event starts to linger and worsen, bring me something that looks like a person",
+  "something dead",
+  "red, yellow and green",
+  "a game colin would play",
+  "something you regret",
+  "the weirdest thing you can find",
+  "disconnected hair",
+  "an old photo",
+  "an item that is currently challenging to find in stores",
+  "something colin would eat off the floor",
 ];
 
 export default class Scavenge extends React.Component {
