@@ -93,17 +93,20 @@ const Button = styled.button`
 `;
 
 const Questions = [
-  "a lightbulb",
-  "before this event starts to linger and worsen, bring me something that looks like a person",
-  "something dead",
-  "red, yellow and green",
-  "a game colin would play",
-  "something you regret",
-  "the weirdest thing you can find",
-  "disconnected hair",
-  "an old photo",
-  "an item that is currently challenging to find in stores",
-  "something colin would eat off the floor",
+  "that reminds you of Todd Dunn",
+  "with a face (not a person)",
+  "cold",
+  "your forgot you had",
+  "embarassing",
+  "that's 15 letters longs",
+  "that's 15-20 inches long",
+  "you got as a present",
+  "you made",
+  "from your childhood",
+  "that comes in a pack",
+  "that has instructions on it",
+  "that's golden",
+  "that started with the letter Q",
 ];
 
 export default class Scavenge extends React.Component {
@@ -177,7 +180,7 @@ export default class Scavenge extends React.Component {
               ))}
             </Find>
             <List>
-              <h1>Find something that...</h1>
+              <h1>Find something...</h1>
               {this.questions.map((item, i) => (
                 <Item
                   onClick={() => this.handleClick(i)}
