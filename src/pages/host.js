@@ -70,19 +70,55 @@ const InverseButton = styled.button`
   margin-bottom: 32px;
 `;
 
-const CalledNumbers = styled.div`
+const Row = styled.tr`
+  color: white;
+`;
+
+const Head = styled.th`
+  border-left: 2px solid white;
+  border-right: 2px solid white;
+  height: 20%;
+  width: 20%;
+
+  background-color: white;
+  color: blue;
+
+  &:first-child {
+    border-left-color: white;
+  }
+
+  &:last-child {
+    border-right-color: white;
+  }
+`;
+
+const Data = styled.td`
+  border: 2px solid white;
+  height: 20%;
+  width: 20%;
+
+  color: ${p => (p.called ? "red" : "inherit")};
+  background-color: ${p => (p.called ? "white" : "inherit")};
+`;
+
+const Table = styled.table`
+  table-layout: fixed;
+  width: 500px;
+  max-width: 100%;
+  border-collapse: collapse;
+
+  margin-bottom: 32px;
+`;
+
+const Square = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 
-  p {
-    margin: 0;
-    margin-bottom: 8px;
-    font-size: 28px;
-    color: white;
-  }
+  padding: 0px;
 
-  margin-bottom: 32px;
+  color: ${p => (p.called ? "red" : "inherit")};
 `;
 
 export default class Board extends React.Component {
@@ -161,50 +197,87 @@ export default class Board extends React.Component {
     }
   }
 
+  renderHeaderSquare(letter) {
+    return (
+      <Head>
+        <Square>
+          <h1>{letter.toUpperCase()}</h1>
+        </Square>
+      </Head>
+    );
+  }
+
+  renderSquare(number) {
+    return (
+      <Data called={this.usedNumbers[number]} key={number}>
+        <Square>
+          <h2>{number}</h2>
+        </Square>
+      </Data>
+    );
+  }
+
+  renderHeader() {
+    return (
+      <Row>
+        {this.renderHeaderSquare("B")}
+        {this.renderHeaderSquare("I")}
+        {this.renderHeaderSquare("N")}
+        {this.renderHeaderSquare("G")}
+        {this.renderHeaderSquare("O")}
+      </Row>
+    );
+  }
+
+  renderRow(index) {
+    const squares = [];
+
+    for (let i = 0; i < 5; i++) {
+      squares.push(this.renderSquare(i * 15 + index));
+    }
+    return <Row key={index}>{squares}</Row>;
+  }
+
   render() {
     const { verify, letter, number, processing } = this.state;
+
+    if (verify) {
+      const rows = [];
+      for (let i = 1; i <= 15; i++) {
+        rows.push(this.renderRow(i));
+      }
+      return (
+        <>
+          <SEO title={"Host"} />
+          <Wrapper>
+            <Spread>
+              <Table>
+                <thead>{this.renderHeader()}</thead>
+                <tbody>{rows}</tbody>
+              </Table>
+              <Button onClick={() => this.toggleVerify()}>Back</Button>
+            </Spread>
+          </Wrapper>
+        </>
+      );
+    }
+
     return (
       <>
         <SEO title={"Host"} />
         <Wrapper>
-          {!verify && (
-            <Centered>
-              <Number>
-                {letter}
-                {number}
-              </Number>
-              <Button disabled={processing} onClick={() => this.next()}>
-                Go
-              </Button>
-              <InverseButton
-                disabled={processing}
-                onClick={() => this.toggleVerify()}
-              >
-                Called
-              </InverseButton>
-            </Centered>
-          )}
-          {verify && (
-            <Spread>
-              <CalledNumbers>
-                {this.usedNumbers.map((number, i) => {
-                  if (!number) return;
-                  return (
-                    <p key={i}>
-                      {this._getLetterForNumber(i)}
-                      {i}
-                    </p>
-                  );
-                })}
-              </CalledNumbers>
-              <InverseButton
-                disabled={processing}
-                onClick={() => this.toggleVerify()}
-              >
-                Back
-              </InverseButton>
-            </Spread>
-          )}
+          <Centered>
+            <Number>
+              {letter}
+              {number}
+            </Number>
+            <Button disabled={processing} onClick={() => this.next()}>
+              Go
+            </Button>
+            <InverseButton onClick={() => this.toggleVerify()}>
+              Called
+            </InverseButton>
+          </Centered>
         </Wrapper>
       </>
     );
