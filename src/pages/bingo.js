@@ -173,7 +173,7 @@ export default class Bingo extends React.Component {
         continue;
       }
 
-      for (let x = 0; x <= 1; x++) {
+      for (let x = -1; x <= 1; x++) {
         for (let y = 0; y <= 1; y++) {
           if (!x && !y) continue;
           const bingo = this._checkSquare(i, clicked, x, y, 1);
@@ -269,7 +269,6 @@ export default class Bingo extends React.Component {
 
   render() {
     const { confetti } = this.state;
-    console.log(confetti);
     return (
       <>
         <SEO title={"Bingo"} />
