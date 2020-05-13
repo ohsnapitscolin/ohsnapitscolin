@@ -7,15 +7,29 @@ import SEO from "../components/seo";
 const Wrapper = styled.div`
   max-width: 100%;
   height: 100%;
+`;
+
+const Centered = styled.div`
+  background-color: blue;
+  min-height: 100%;
 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+`;
 
-  padding: 0 20px;
-
+const Spread = styled.div`
   background-color: blue;
+  min-height: 100%;
+
+  padding: 80px;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 const Number = styled.h1`
@@ -37,6 +51,38 @@ const Button = styled.button`
 
   outline: none;
   cursor: pointer;
+
+  margin-bottom: 32px;
+`;
+
+const InverseButton = styled.button`
+  background-color: blue;
+  color: white;
+  width: 150px;
+  height: 40px;
+  border: white solid 1px;
+
+  font-size: 18px;
+
+  outline: none;
+  cursor: pointer;
+
+  margin-bottom: 32px;
+`;
+
+const CalledNumbers = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  p {
+    margin: 0;
+    margin-bottom: 8px;
+    font-size: 28px;
+    color: white;
+  }
+
+  margin-bottom: 32px;
 `;
 
 export default class Board extends React.Component {
@@ -57,6 +103,12 @@ export default class Board extends React.Component {
       processing: true,
     });
     this._getNext(25, false);
+  }
+
+  toggleVerify() {
+    this.setState({
+      verify: !this.state.verify,
+    });
   }
 
   _getNext(i, remove) {
@@ -99,29 +151,60 @@ export default class Board extends React.Component {
 
   _getUnusedNumberForRange(min, max, remove) {
     const number = Math.floor(Math.random() * (max - min + 1)) + min;
-    if (this.usedNumbers.includes(number)) {
+    if (this.usedNumbers[number]) {
       return this._getUnusedNumberForRange(min, max, remove);
     } else {
       if (remove) {
-        this.usedNumbers.push(number);
+        this.usedNumbers[number] = true;
       }
       return number;
     }
   }
 
   render() {
-    const { letter, number, processing } = this.state;
+    const { verify, letter, number, processing } = this.state;
     return (
       <>
         <SEO title={"Host"} />
         <Wrapper>
-          <Number>
-            {letter}
-            {number}
-          </Number>
-          <Button disabled={processing} onClick={() => this.next()}>
-            Go
-          </Button>
+          {!verify && (
+            <Centered>
+              <Number>
+                {letter}
+                {number}
+              </Number>
+              <Button disabled={processing} onClick={() => this.next()}>
+                Go
+              </Button>
+              <InverseButton
+                disabled={processing}
+                onClick={() => this.toggleVerify()}
+              >
+                Called
+              </InverseButton>
+            </Centered>
+          )}
+          {verify && (
+            <Spread>
+              <CalledNumbers>
+                {this.usedNumbers.map((number, i) => {
+                  if (!number) return;
+                  return (
+                    <p key={i}>
+                      {this._getLetterForNumber(i)}
+                      {i}
+                    </p>
+                  );
+                })}
+              </CalledNumbers>
+              <InverseButton
+                disabled={processing}
+                onClick={() => this.toggleVerify()}
+              >
+                Back
+              </InverseButton>
+            </Spread>
+          )}
         </Wrapper>
       </>
     );
