@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Confetti from "react-confetti";
 
 import SEO from "../components/seo";
 
@@ -99,9 +100,11 @@ export default class Bingo extends React.Component {
     }
 
     const board = savedBoard || this.generateBoard();
+
     this.setState({
       board,
       clicked: savedClicks || this.state.clicked,
+      confetti: this._checkForConfetti(savedClicks || []),
     });
   }
 
@@ -156,10 +159,47 @@ export default class Bingo extends React.Component {
     this.setState(
       {
         clicked,
+        confetti: this._checkForConfetti(clicked),
       },
       () => {
         window.localStorage.setItem("clicks", JSON.stringify(clicked));
       }
+    );
+  }
+
+  _checkForConfetti(clicked) {
+    for (let i = 0; i < clicked.length; i++) {
+      if (!clicked[i] || (i > 4 && i % 5)) {
+        continue;
+      }
+
+      for (let x = 0; x <= 1; x++) {
+        for (let y = 0; y <= 1; y++) {
+          if (!x && !y) continue;
+          const bingo = this._checkSquare(i, clicked, x, y, 1);
+          if (bingo) return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  _checkSquare(i, clicked, directionX, directionY, streak) {
+    const nextIndex = i + 5 * directionY + directionX;
+    if (!clicked[nextIndex] && nextIndex !== 12) {
+      return false;
+    }
+
+    const newStreak = streak + 1;
+    if (newStreak === 5) {
+      return true;
+    }
+    return this._checkSquare(
+      nextIndex,
+      clicked,
+      directionX,
+      directionY,
+      newStreak
     );
   }
 
@@ -172,6 +212,7 @@ export default class Bingo extends React.Component {
     this.setState({
       board,
       clicked,
+      confetti: false,
     });
   }
 
@@ -227,9 +268,12 @@ export default class Bingo extends React.Component {
   }
 
   render() {
+    const { confetti } = this.state;
+    console.log(confetti);
     return (
       <>
         <SEO title={"Bingo"} />
+        {confetti && <Confetti />}
         <Wrapper>
           <Table>
             <thead>{this.renderHeader()}</thead>
