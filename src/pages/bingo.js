@@ -176,6 +176,7 @@ export default class Bingo extends React.Component {
       for (let x = -1; x <= 1; x++) {
         for (let y = 0; y <= 1; y++) {
           if (!x && !y) continue;
+          if (x === -1 && y === 0) continue;
           const bingo = this._checkSquare(i, clicked, x, y, 1);
           if (bingo) return true;
         }
@@ -185,6 +186,10 @@ export default class Bingo extends React.Component {
   }
 
   _checkSquare(i, clicked, directionX, directionY, streak) {
+    if (i % 5 === 4 && directionX === 1) {
+      return false;
+    }
+
     const nextIndex = i + 5 * directionY + directionX;
     if (!clicked[nextIndex] && nextIndex !== 12) {
       return false;
