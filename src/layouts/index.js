@@ -1,6 +1,6 @@
 import React from "react";
 
-import "../style/snap.css";
+import "../style/snap.scss";
 
 export default class Layout extends React.Component {
   render() {

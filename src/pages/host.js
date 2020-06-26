@@ -10,17 +10,19 @@ const Wrapper = styled.div`
 `;
 
 const Centered = styled.div`
-  background-color: blue;
+  background-color: transparent;
   min-height: 100%;
 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  text-shadow: 2px 2px rgb(20, 43, 111);
 `;
 
 const Spread = styled.div`
-  background-color: blue;
+  background-color: transparent;
   min-height: 100%;
 
   padding: 80px;
@@ -43,7 +45,7 @@ const Number = styled.h1`
 
 const Button = styled.button`
   background-color: white;
-  color: blue;
+  color: rgb(20, 43, 111);
   width: 150px;
   height: 40px;
 
@@ -56,7 +58,7 @@ const Button = styled.button`
 `;
 
 const InverseButton = styled.button`
-  background-color: blue;
+  background-color: rgb(20, 43, 111);
   color: white;
   width: 150px;
   height: 40px;
@@ -81,7 +83,7 @@ const Head = styled.th`
   width: 20%;
 
   background-color: white;
-  color: blue;
+  color: rgb(20, 43, 111);
 
   &:first-child {
     border-left-color: white;
@@ -97,7 +99,7 @@ const Data = styled.td`
   height: 20%;
   width: 20%;
 
-  color: ${p => (p.called ? "red" : "inherit")};
+  color: ${p => (p.called ? "rgb(20, 43, 111)" : "inherit")};
   background-color: ${p => (p.called ? "white" : "inherit")};
 `;
 

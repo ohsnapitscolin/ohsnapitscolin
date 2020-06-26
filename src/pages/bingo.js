@@ -19,27 +19,31 @@ const Wrapper = styled.div`
 const Row = styled.tr``;
 
 const Head = styled.th`
-  border-left: 2px solid white;
-  border-right: 2px solid white;
+  border: 0px solid white;
+  border: 0px solid white;
   height: 20%;
   width: 20%;
 
-  background-color: blue;
+  background-color: rgb(20, 43, 111);
   color: white;
 
   &:first-child {
-    border-left-color: blue;
+    border-left-color: rgb(20, 43, 111);
   }
 
   &:last-child {
-    border-right-color: blue;
+    border-right-color: rgb(20, 43, 111);
   }
 `;
 
 const Data = styled.td`
-  border: 2px solid blue;
+  border: 2px solid
+    ${p => (p.clicked || p.free ? "rgb(20, 43, 111)" : "rgb(20, 43, 111)")};
   height: 20%;
   width: 20%;
+  background-color: ${p => (p.clicked || p.free ? "transparent" : "white")};
+  color: ${p => (p.clicked || p.free ? "white" : "rgb(20, 43, 111)")};
+  text-shadow: ${p => (p.clicked || p.free ? "1px 1px rgb(20, 43, 111)" : "")};
 `;
 
 const Table = styled.table`
@@ -49,6 +53,7 @@ const Table = styled.table`
   border-collapse: collapse;
 
   margin-bottom: 32px;
+  border-radius: 10px;
 `;
 
 const Square = styled.div`
@@ -60,14 +65,17 @@ const Square = styled.div`
   padding: 0px;
   cursor: pointer;
 
-  color: ${p => (p.clicked || p.free ? "red" : "inherit")};
-
   font-size: ${p => (p.free ? "14px" : "16px")};
 `;
 
-const Button = styled.button`
-  background-color: blue;
+const HeadSquare = styled(Square)`
+  background-color: transparent;
   color: white;
+`;
+
+const Button = styled.button`
+  background-color: white;
+  color: rgb(20, 43, 111);
   width: 150px;
   height: 40px;
 
@@ -224,9 +232,9 @@ export default class Bingo extends React.Component {
   renderHeaderSquare(letter) {
     return (
       <Head>
-        <Square>
+        <HeadSquare>
           <h1>{letter.toUpperCase()}</h1>
-        </Square>
+        </HeadSquare>
       </Head>
     );
   }
@@ -234,12 +242,8 @@ export default class Bingo extends React.Component {
   renderSquare(key, number) {
     const { clicked } = this.state;
     return (
-      <Data key={key}>
-        <Square
-          free={key === 12}
-          clicked={clicked[key]}
-          onClick={() => this._handleClick(key)}
-        >
+      <Data free={key === 12} clicked={clicked[key]} key={key}>
+        <Square clicked={clicked[key]} onClick={() => this._handleClick(key)}>
           <h2>{number}</h2>
         </Square>
       </Data>
