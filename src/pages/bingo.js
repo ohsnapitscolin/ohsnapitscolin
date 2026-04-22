@@ -20,7 +20,6 @@ const Row = styled.tr``;
 
 const Head = styled.th`
   border: 0px solid white;
-  border: 0px solid white;
   height: 20%;
   width: 20%;
 
@@ -37,8 +36,7 @@ const Head = styled.th`
 `;
 
 const Data = styled.td`
-  border: 2px solid
-    ${p => (p.clicked || p.free ? "rgb(20, 43, 111)" : "rgb(20, 43, 111)")};
+  border: 2px solid rgb(20, 43, 111);
   height: 20%;
   width: 20%;
   background-color: ${p => (p.clicked || p.free ? "transparent" : "white")};
@@ -218,7 +216,7 @@ export default class Bingo extends React.Component {
 
   _reset() {
     window.localStorage.removeItem("clicks");
-    window.localStorage.removeItem("clicks");
+    window.localStorage.removeItem("board");
 
     const board = this.generateBoard();
     const clicked = [];

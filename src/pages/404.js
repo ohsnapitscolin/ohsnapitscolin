@@ -20,7 +20,7 @@ export default class FourOhFour extends React.Component {
     return (
       <>
         <SEO title={"404"} />
-        <Wrapper />;
+        <Wrapper />
       </>
     );
   }

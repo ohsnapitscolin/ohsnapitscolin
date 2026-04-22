@@ -20,7 +20,7 @@ export default class Index extends React.Component {
     return (
       <>
         <SEO title={"Home"} />
-        <Wrapper />;
+        <Wrapper />
       </>
     );
   }
